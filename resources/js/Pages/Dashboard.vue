@@ -1,6 +1,7 @@
 <script setup>
 import TabbarLayout from '@/Layouts/TabbarLayout.vue'
 import { Head } from '@inertiajs/vue3';
+import Index from "../../../public/vendor/dcat-admin/dcat/plugins/editor-md/lib/codemirror/mode/rpm/changes/index.html";
 
 const props = defineProps({
 
@@ -9,7 +10,7 @@ const props = defineProps({
 
 <template>
     <Head title="工作台" />
-    <div class="w-full min-h-screen pt-4 px-4 bg-gray-200 flex flex-col ">
+    <div class="w-full h-full pt-4 px-4 pb-24 bg-gray-200 flex flex-col ">
         <van-search shape="round"
             v-model="value"
             show-action
@@ -36,6 +37,33 @@ const props = defineProps({
                 <div>获取数据时间：2023-08-16 09:19:38</div>
             </div>
         </div>
+
+        <div class="w-full px-6 py-3 border-b-2 bg-white flex flex-col items-center">
+            <div class="w-full mt-1 text-sm leading-8 border-b flex justify-between">
+                <div class="text-gray-400">已接通</div>
+            </div>
+            <div class="w-full mt-1 text-sm leading-8 border-b flex justify-between">
+                <div class="text-green-400 ">已同意</div>
+            </div>
+            <div class="w-full mt-1 text-sm leading-8 border-b flex justify-between">
+                <div class="w-4/5  text-blue-400 overflow-hidden whitespace-nowrap overflow-ellipsis ">未接通(通话中/语音助手/在忙稍后回电)</div>
+            </div>
+            <div class="w-full mt-1 text-sm leading-8 border-b flex justify-between">
+                <div class="text-red-400">拒绝</div>
+            </div>
+            <div class="w-full mt-1 text-sm leading-8 border-b flex justify-between">
+                <div class="text-red-400">直接挂断</div>
+            </div>
+            <div class="w-full mt-1 text-sm leading-8 flex justify-between">
+                <div class="text-yellow-400">关机/停机/空号</div>
+            </div>
+        </div>
+        <div class="w-full h-full p-2 bg-white">
+            <textarea class="w-full h-30 text-sm border-none focus:border-none placeholder-gray-400"
+                      name="remark" cols="30" rows="3" placeholder="请输入备注信息" />
+        </div>
+
+        <button class="w-full mt-4 leading-8 text-sm text-gray-100 bg-blue-500 rounded-sm" type="button">确认提交</button>
     </div>
-<TabbarLayout />
+<TabbarLayout  :active="0"/>
 </template>

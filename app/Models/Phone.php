@@ -10,5 +10,7 @@ class Phone extends Model
 {
 	use HasDateTimeFormatter;
     protected $table = 'tel_phone';
-    
+
+    protected $fillable = [];
+
 }

@@ -9,11 +9,13 @@
 <script setup>
 import {ref} from "vue";
 import { Link } from '@inertiajs/vue3';
-
-const active = ref(0)
-
-const updateActive = (index)=>{
-    active.value = index
-}
+defineProps({
+    active: Number
+})
+// const active = ref(0)
+//
+// const updateActive = (index)=>{
+//     active.value = index
+// }
 </script>
 

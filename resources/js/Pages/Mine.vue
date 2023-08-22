@@ -4,8 +4,8 @@ import { Head } from '@inertiajs/vue3';
 </script>
 <template>
     <Head title="我的"></Head>
-    <div></div>
-    <TabbarLayout />
+    <div>我的</div>
+    <TabbarLayout  :active="2"/>
 </template>
 <style scoped>
 

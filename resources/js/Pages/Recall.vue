@@ -6,7 +6,7 @@ import { Head } from '@inertiajs/vue3';
 <template>
     <Head title="复播"/>
     <div>复播</div>
-    <TabbarLayout />
+    <TabbarLayout  :active="1"/>
 </template>
 
 

@@ -23,4 +23,5 @@ export default defineConfig({
             resolvers: [VantResolver()],
         })
     ],
+    assetsInclude: ['public/vendor/**/*.html']
 });
