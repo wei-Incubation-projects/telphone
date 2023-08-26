@@ -31,8 +31,8 @@ class UserController extends AdminController
 //            $grid->column('updated_at')->sortable();
 
             $grid->filter(function (Grid\Filter $filter) {
-                $filter->equal('id');
-
+//                $filter->equal('id');
+                    $filter->like('name','名称');
             });
         });
     }
@@ -50,9 +50,9 @@ class UserController extends AdminController
             $show->field('id');
             $show->field('name');
             $show->field('email');
-            $show->field('email_verified_at');
+//            $show->field('email_verified_at');
             $show->field('password');
-            $show->field('remember_token');
+//            $show->field('remember_token');
             $show->field('status');
             $show->field('created_at');
             $show->field('updated_at');
@@ -70,13 +70,16 @@ class UserController extends AdminController
             $form->display('id');
             $form->text('name');
             $form->text('email');
-            $form->text('email_verified_at');
-            $form->text('password');
-            $form->text('remember_token');
-            $form->text('status');
+//            $form->text('email_verified_at');
+            $form->password('password');
+//            $form->text('remember_token');
+            $form->radio('status')->options(['1'=>'正常','0'=>'禁用'])->default('1');
 
             $form->display('created_at');
             $form->display('updated_at');
+            $form->saving(function (Form $from ){
+                $from->password = password_hash($from->password,PASSWORD_DEFAULT);
+            });
         });
     }
 }

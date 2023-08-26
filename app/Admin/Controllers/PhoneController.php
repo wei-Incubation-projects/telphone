@@ -20,14 +20,16 @@ class PhoneController extends AdminController
         return Grid::make(new PhoneRepositories(), function (Grid $grid) {
             $grid->column('id')->sortable();
             $grid->column('phone');
-            $grid->column('resource');
-            $grid->column('status');
+//            $grid->column('resource');
+            $grid->column('status')->display(function($status){
+                return $status ? '正常':'禁用';
+            });
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
-        
+
             $grid->filter(function (Grid\Filter $filter) {
-                $filter->equal('id');
-        
+//                $filter->equal('id');
+                $filter->like('phone','号码');
             });
         });
     }
@@ -44,7 +46,7 @@ class PhoneController extends AdminController
         return Show::make($id, new PhoneRepositories(), function (Show $show) {
             $show->field('id');
             $show->field('phone');
-            $show->field('resource');
+//            $show->field('resource');
             $show->field('status');
             $show->field('created_at');
             $show->field('updated_at');
@@ -60,10 +62,10 @@ class PhoneController extends AdminController
     {
         return Form::make(new PhoneRepositories(), function (Form $form) {
             $form->display('id');
-            $form->text('phone');
-            $form->text('resource');
-            $form->text('status');
-        
+            $form->mobile('phone')->required();
+//            $form->text('resource');
+            $form->radio('status')->options(['1'=>'正常','0'=>'禁用'])->default('1');
+
             $form->display('created_at');
             $form->display('updated_at');
         });

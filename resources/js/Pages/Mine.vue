@@ -1,6 +1,9 @@
 <script setup>
 import TabbarLayout from '@/Layouts/TabbarLayout.vue'
-import { Head } from '@inertiajs/vue3';
+import { Head  } from '@inertiajs/vue3';
+const logout = () => {
+    Inertia.visit(route('logout'));
+}
 </script>
 <template>
     <Head title="我的"></Head>
@@ -15,7 +18,7 @@ import { Head } from '@inertiajs/vue3';
 
         </van-space>
         <div class="mt-8">
-            <van-button class="mt-4" type="danger"  block>退出登录</van-button>
+            <van-button class="mt-4" type="danger" :to="route('logout')" block>退出登录</van-button>
         </div>
     </div>
     <TabbarLayout  :active="2"/>
