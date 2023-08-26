@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Repositories\UserPhoneRepositories;
+use App\Models\User;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
@@ -19,16 +20,18 @@ class UserPhoneController extends AdminController
     {
         return Grid::make(new UserPhoneRepositories(), function (Grid $grid) {
             $grid->column('id')->sortable();
-            $grid->column('user_id');
+            $grid->column('user_id')->display(function ($userId){
+                return User::query()->find($userId)->name;
+            });
             $grid->column('phone');
             $grid->column('callback');
             $grid->column('remark');
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
-        
+
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
-        
+
             });
         });
     }
@@ -66,7 +69,7 @@ class UserPhoneController extends AdminController
             $form->text('phone');
             $form->text('callback');
             $form->text('remark');
-        
+
             $form->display('created_at');
             $form->display('updated_at');
         });
