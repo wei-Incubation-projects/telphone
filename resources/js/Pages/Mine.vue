@@ -1,8 +1,9 @@
 <script setup>
 import TabbarLayout from '@/Layouts/TabbarLayout.vue'
 import { Head  } from '@inertiajs/vue3';
+import {Inertia} from "@inertiajs/inertia";
 const logout = () => {
-    Inertia.visit(route('logout'));
+    Inertia.post(route('logout'));
 }
 </script>
 <template>
@@ -18,7 +19,7 @@ const logout = () => {
 
         </van-space>
         <div class="mt-8">
-            <van-button class="mt-4" type="danger" :to="route('logout')" block>退出登录</van-button>
+            <van-button class="mt-4" type="danger" @click="logout" block>退出登录</van-button>
         </div>
     </div>
     <TabbarLayout  :active="2"/>

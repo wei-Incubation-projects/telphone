@@ -1,6 +1,9 @@
 lockfileVersion: '6.0'
 
 dependencies:
+  '@inertiajs/inertia':
+    specifier: ^0.11.1
+    version: registry.npmmirror.com/@inertiajs/inertia@0.11.1
   '@inertiajs/inertia-vue3':
     specifier: ^0.6.0
     version: registry.npmmirror.com/@inertiajs/inertia-vue3@0.6.0(@inertiajs/inertia@0.11.1)(vue@3.2.41)
