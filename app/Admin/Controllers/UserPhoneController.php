@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Admin\Repositories\UserPhoneRepositories;
 use App\Models\User;
+use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
@@ -33,6 +34,7 @@ class UserPhoneController extends AdminController
                 $filter->equal('id');
 
             });
+            $grid->tools('<a class="btn btn-primary disable-outline">测试按钮</a>');
         });
     }
 

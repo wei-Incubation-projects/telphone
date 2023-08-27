@@ -2,14 +2,19 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\ShowUserPhones;
 use App\Admin\Repositories\User;
+use App\Models\UserPhone;
+use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
+use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
 
 class UserController extends AdminController
 {
+
     /**
      * Make a grid builder.
      *
@@ -34,6 +39,7 @@ class UserController extends AdminController
 //                $filter->equal('id');
                     $filter->like('name','名称');
             });
+
         });
     }
 
@@ -53,9 +59,20 @@ class UserController extends AdminController
 //            $show->field('email_verified_at');
             $show->field('password');
 //            $show->field('remember_token');
-            $show->field('status');
+            $show->field('status')->using(['1'=>'正常','0'=>'禁用']);
             $show->field('created_at');
             $show->field('updated_at');
+
+            $show->relation('phones', function($model){
+                $grid = new Grid(new UserPhone);
+                $grid->model()->where('user_id',$model->id);
+                $grid->setResource('user-phone');
+                $grid->phones();
+                $grid->filter(function ($filter){
+                   $filter->like('phone')->width('300px');
+                });
+                return $grid;
+            });
         });
     }
 
@@ -68,6 +85,7 @@ class UserController extends AdminController
     {
         return Form::make(new User(), function (Form $form) {
             $form->display('id');
+            $form->hidden('admin_id',)->default(Admin::user()->id);
             $form->text('name');
             $form->text('email');
 //            $form->text('email_verified_at');

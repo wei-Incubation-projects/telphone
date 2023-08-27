@@ -3,10 +3,12 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Repositories\PhoneRepositories;
+use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
+use function Sodium\add;
 
 class PhoneController extends AdminController
 {
@@ -62,12 +64,14 @@ class PhoneController extends AdminController
     {
         return Form::make(new PhoneRepositories(), function (Form $form) {
             $form->display('id');
+            $form->hidden('admin_id',)->default(Admin::user()->id);
             $form->mobile('phone')->required();
 //            $form->text('resource');
             $form->radio('status')->options(['1'=>'正常','0'=>'禁用'])->default('1');
 
             $form->display('created_at');
             $form->display('updated_at');
+
         });
     }
 }

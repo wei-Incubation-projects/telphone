@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->tinyInteger('status')->default(1)->comment('状态');
+            $table->integer('admin_id')->default(0)->comment('管理员id');
             $table->timestamps();
         });
     }
