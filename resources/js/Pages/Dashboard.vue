@@ -1,21 +1,42 @@
 <script setup>
 import TabbarLayout from '@/Layouts/TabbarLayout.vue'
 import { Head } from '@inertiajs/vue3';
-import Index from "../../../public/vendor/dcat-admin/dcat/plugins/editor-md/lib/codemirror/mode/rpm/changes/index.html";
-
+import {ref} from "vue";
 const props = defineProps({
 
 })
+const onSearch = (value)=>{
+    console.log(value)
+}
+const phone = ref();
+const show = ref(false);
+const changeKey = (status)=>{
+    show.value = status
+}
+const deletePhone = ()=>{
+    phone.value = phone.value.slice(0,-1)
+}
+const onClickButton = ()=>{
+
+}
 </script>
 
 <template>
     <Head title="工作台" />
-    <div class="w-full h-full pt-4 px-4 pb-24 bg-gray-200 flex flex-col ">
+    <div class="w-full h-[calc(100vh-50px)] overflow-y-auto pt-4 px-4 pb-6  bg-gray-200 flex-1 flex flex-col ">
+        <van-number-keyboard
+            v-model="phone"
+            :maxlength="11"
+            :show="show"
+            @blur="changeKey(false)"
+            @delete="deletePhone"
+        />
         <van-search shape="round"
-            v-model="value"
+            v-model="phone"
             show-action
             placeholder="请输入手机号码"
             @search="onSearch"
+            @focus="changeKey(true)"
         >
             <template #action>
                 <div @click="onClickButton">搜索</div>
