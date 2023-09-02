@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Grid\UserPhoneAction;
 use App\Admin\Actions\ShowUserPhones;
 use App\Admin\Repositories\User;
 use App\Models\UserPhone;
@@ -38,6 +39,9 @@ class UserController extends AdminController
             $grid->filter(function (Grid\Filter $filter) {
 //                $filter->equal('id');
                     $filter->like('name','名称');
+            });
+            $grid->column('phones')->display(function ($phones){
+               return new UserPhoneAction();
             });
 
         });

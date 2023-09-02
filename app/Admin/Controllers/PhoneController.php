@@ -2,13 +2,16 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\UploadUserPhone;
+use App\Admin\Forms\UploadSetting;
 use App\Admin\Repositories\PhoneRepositories;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
+use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
-use function Sodium\add;
+use Dcat\Admin\Widgets\Card;
 
 class PhoneController extends AdminController
 {
@@ -20,12 +23,15 @@ class PhoneController extends AdminController
     protected function grid()
     {
         return Grid::make(new PhoneRepositories(), function (Grid $grid) {
+            $grid->tools(new UploadUserPhone());
+
             $grid->column('id')->sortable();
             $grid->column('phone');
 //            $grid->column('resource');
             $grid->column('status')->display(function($status){
                 return $status ? '正常':'禁用';
             });
+            $grid->column('batch','批次');
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
 

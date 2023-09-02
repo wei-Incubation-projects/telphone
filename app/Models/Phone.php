@@ -11,6 +11,6 @@ class Phone extends Model
 	use HasDateTimeFormatter;
     protected $table = 'tel_phone';
 
-    protected $fillable = [  'admin_id',];
+    protected $fillable = ['id','phone','admin_id','status','batch'];
 
 }
