@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\BatchPhoneAction;
 use App\Admin\Actions\UploadUserPhone;
 use App\Admin\Forms\UploadSetting;
 use App\Admin\Repositories\PhoneRepositories;
@@ -39,6 +40,7 @@ class PhoneController extends AdminController
 //                $filter->equal('id');
                 $filter->like('phone','号码');
             });
+            $grid->tools(new BatchPhoneAction());
         });
     }
 

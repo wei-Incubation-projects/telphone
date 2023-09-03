@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Grid\UserPhoneAction;
 use App\Admin\Repositories\UserPhoneRepositories;
 use App\Models\User;
 use Dcat\Admin\Admin;
@@ -31,10 +32,9 @@ class UserPhoneController extends AdminController
             $grid->column('updated_at')->sortable();
 
             $grid->filter(function (Grid\Filter $filter) {
-                $filter->equal('id');
-
+                $filter->like('phone');
             });
-            $grid->tools('<a class="btn btn-primary disable-outline">测试按钮</a>');
+            $grid->tools(new UserPhoneAction());
         });
     }
 

@@ -16,4 +16,6 @@ Route::group([
     $router->resource('users', 'UserController');
     $router->resource('user-phone', 'UserPhoneController');
     $router->resource('phones', 'PhoneController');
+
+    $router->get('api/users', 'UserController@userlist');
 });
