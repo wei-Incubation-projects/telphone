@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Admin\Actions\Grid\UserPhoneAction;
 use App\Admin\Actions\ShowUserPhoneAction;
 use App\Admin\Repositories\User;
+use App\Models\Phone;
 use App\Models\User as UserModel;
 use App\Admin\Repositories\UserPhoneRepositories;
 use Dcat\Admin\Admin;
@@ -99,6 +100,7 @@ class UserController extends AdminController
      */
     protected function form()
     {
+        $builder = User::with('phones');
         return Form::make(new User(), function (Form $form) {
             $form->display('id');
             $form->hidden('admin_id',)->default(Admin::user()->id);
@@ -108,11 +110,19 @@ class UserController extends AdminController
             $form->password('password');
 //            $form->text('remember_token');
             $form->radio('status')->options(['1'=>'正常','0'=>'禁用'])->default('1');
-
+            $form->multipleSelect('phones','分配号码')->options(Phone::all()
+                ->pluck('phone','id'));
             $form->display('created_at');
             $form->display('updated_at');
             $form->saving(function (Form $from ){
+                $from->phones = implode(',',$from->phones);
                 $from->password = password_hash($from->password,PASSWORD_DEFAULT);
+            });
+            $form->saved(function (Form $form){
+                foreach ($form->phones as $phone){
+                    dump($phone);
+                }
+                dd($form->getKey());
             });
         });
     }

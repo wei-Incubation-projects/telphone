@@ -36,4 +36,13 @@ class BatchPhoneUser extends Form
     {
         $this->select('user')->options(User::class,'id','name')->ajax('/api/users');
     }
+
+    protected function html()
+    {
+//        $this->appendHtmlAttribute('class', $this->style);
+
+        return <<<HTML
+<button {$this->formatHtmlAttributes()}>{$this->title()}</button>
+HTML;
+    }
 }
