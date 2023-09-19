@@ -18,7 +18,7 @@ class CreateUserPhoneTable extends Migration
             $table->integer('user_id')->index()->default('0')->comment('用户id');
             $table->string('phone')->default('')->comment('业务号码');
             $table->integer('callback')->default('1')->comment('拨打结果：0=关机,1=已接通,2=已同意,3=未接通,4=拒绝,5=直接挂断');
-            $table->text('remark')->comment('备注信息');
+            $table->text('remark')->nullable()->comment('备注信息');
             $table->timestamps();
             $table->comment('会员电话薄');
         });
