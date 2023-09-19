@@ -2,17 +2,12 @@
 
 namespace App\Models;
 
-use Dcat\Admin\Traits\HasDateTimeFormatter;
-
-use Illuminate\Database\Eloquent\Model;
-
-class UserPhone extends Model
+class UserPhone extends BaseModel
 {
-    use HasDateTimeFormatter;
 
     protected $table = 'user_phone';
 
-    protected $fillable = [];
+    protected $fillable = ['id', 'user_id','phone','callback','remark', 'created_at', 'updated_at'];
 
     public array $statusText = [
         1 => '已接通',

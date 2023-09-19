@@ -21,5 +21,18 @@ class DatabaseSeeder extends Seeder
              'email' => 'abc',
              'password' => password_hash('123456',null),
          ]);
+
+        $root = \App\Models\AdminUser::create([
+            'username' => 'Administrator',
+            'account' => 'root',
+            'password' => password_hash('123456',PASSWORD_DEFAULT),
+            'status' => '1',
+        ]);
+        $root->roles()->sync([1]);
+
+        $this->call([
+            AdminMenuSeeder::class,
+            AdminRoleSeeder::class,
+        ]);
     }
 }

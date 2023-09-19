@@ -3,7 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Dcat\Admin\Admin;
+use App\Http\Filters\QueryFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -52,6 +53,16 @@ class User extends Authenticatable
 
     public function agent()
     {
-        return $this->belongsTo(Admin::class,'admin_id');
+        return $this->belongsTo(AdminUser::class,'admin_id');
+    }
+
+    /**
+     * @param $query
+     * @param QueryFilter $filter
+     * @return Builder
+     */
+    public function scopeFilter($query, QueryFilter $filter): Builder
+    {
+        return $filter->apply($query);
     }
 }

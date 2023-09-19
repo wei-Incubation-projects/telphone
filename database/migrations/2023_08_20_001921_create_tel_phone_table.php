@@ -21,6 +21,7 @@ class CreateTelPhoneTable extends Migration
             $table->integer('admin_id')->default(0)->comment('管理员ID');
             $table->integer('batch')->default(0)->comment('批次');
             $table->timestamps();
+            $table->comment('号码库');
         });
     }
 

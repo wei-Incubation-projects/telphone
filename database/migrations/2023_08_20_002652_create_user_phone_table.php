@@ -20,6 +20,7 @@ class CreateUserPhoneTable extends Migration
             $table->integer('callback')->default('1')->comment('拨打结果：0=关机,1=已接通,2=已同意,3=未接通,4=拒绝,5=直接挂断');
             $table->text('remark')->comment('备注信息');
             $table->timestamps();
+            $table->comment('会员电话薄');
         });
     }
 
