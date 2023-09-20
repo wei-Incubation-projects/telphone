@@ -35,8 +35,9 @@ class UserController extends Controller
     {
         //
         $validated = $request->validated();
+        $validated['admin_id'] = auth('admin')->id();
         $model = User::create($validated);
-        return $model?->roles()->sync($validated['role']) ? Response::ok('ok') : Response::fail('no');
+        return $model ? Response::ok('ok') : Response::fail('no');
     }
 
     /**
@@ -56,6 +57,7 @@ class UserController extends Controller
     {
         //
         $validated = $request->validated();
+        $validated['admin_id'] = auth('admin')->id();
         $model = User::query()->findOrFail($request->id);
         return $model->save($validated) ? Response::ok() : Response::fail();
     }
@@ -67,6 +69,8 @@ class UserController extends Controller
     {
         //
         $model = User::query()->findOrFail($request->id);
+        $model->phones()->detach();
         return  $model->delete() ? Response::ok() : Response::fail();
     }
+
 }

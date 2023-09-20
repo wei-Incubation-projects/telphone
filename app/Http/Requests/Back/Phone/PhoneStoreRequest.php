@@ -24,8 +24,7 @@ class PhoneStoreRequest extends FormRequest
         return [
             //
             'phone' => 'required|string|max:64|unique:tel_phone',
-            'status'   => 'required|integer',
-            'batch'   => 'nullable|integer',
+            'status'   => 'nullable|integer',
         ];
     }
 }

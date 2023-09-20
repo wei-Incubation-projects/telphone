@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Http\Requests\Back\AdminUser;
+namespace App\Http\Requests\Back\Tel;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminUserStoreRequest extends FormRequest
+class UserTelIndexRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        $uri = explode('/',$this->route()->uri());
+        return $this->user('admin')->tokenCan(implode(':', array_slice($uri,-3)));
     }
 
     /**
@@ -23,11 +24,7 @@ class AdminUserStoreRequest extends FormRequest
     {
         return [
             //
-            'username' => 'required|string|max:20',
-            'account'  => 'required|string|min:4,max:64|unique:admin_users',
-            'password'  => 'nullable|string|min:6,max:64',
-            'status'   => 'required|integer',
-            'role'     => 'nullable|array',
+
         ];
     }
 }

@@ -14,6 +14,28 @@ class AdminRoleResource extends JsonResource
      */
     public function toArray($request): array
     {
-        return parent::toArray($request);
+        $this->resource->load('menus');
+
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'symbol' => $this->symbol,
+            'remark' => $this->remark,
+            'status' => $this->status,
+            'menus' => $this->when($this->shouldIncludeRoles(), function (){
+                return $this->menus->map(function ($item){
+                    return $item->only(['id','title']);
+                });
+            },[]),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+
+        ];
+    }
+
+    private function shouldIncludeRoles()
+    {
+        // 根据属性的值来判断是否展示关联数据
+        return $this->symbol !== 'root';
     }
 }

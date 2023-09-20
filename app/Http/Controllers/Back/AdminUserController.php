@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
 use App\Http\Filters\AdminUserFilter;
-use App\Http\Requests\Back\AdminUser\UserDestroyRequest;
+use App\Http\Requests\Back\AdminUser\AdminUserDestroyRequest;
 use App\Http\Requests\Back\AdminUser\AdminUserIndexRequest;
 use App\Http\Requests\Back\AdminUser\AdminUserShowRequest;
 use App\Http\Requests\Back\AdminUser\AdminUserStoreRequest;
@@ -64,7 +64,7 @@ class AdminUserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(UserDestroyRequest $request): JsonResponse|JsonResource
+    public function destroy(AdminUserDestroyRequest $request): JsonResponse|JsonResource
     {
         //
         $model = AdminUser::query()->findOrFail($request->id);

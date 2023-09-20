@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Back\AdminUser;
+namespace App\Http\Requests\Back\Tel;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminUserStoreRequest extends FormRequest
+class UserTelUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +23,12 @@ class AdminUserStoreRequest extends FormRequest
     {
         return [
             //
-            'username' => 'required|string|max:20',
-            'account'  => 'required|string|min:4,max:64|unique:admin_users',
-            'password'  => 'nullable|string|min:6,max:64',
-            'status'   => 'required|integer',
-            'role'     => 'nullable|array',
+            'id' => 'required|integer',
+            'phone' => 'required|string|max:64',
+            'callback' => 'nullable|integer',
+            'remark' => 'nullable|string',
+            'user_id' => 'required|integer',
+
         ];
     }
 }

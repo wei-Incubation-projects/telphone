@@ -71,4 +71,14 @@ class AdminRoleController extends Controller
         $model->menus()->detach();
         return $model->delete() ? Response::ok() : Response::fail();
     }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function getAll(AdminRoleIndexRequest $request, AdminRoleFilter $filter): JsonResponse|JsonResource
+    {
+        //
+        $model = AdminRole::query()->where('status',1)->get();
+        return Response::success(AdminRoleResource::collection($model));
+    }
 }

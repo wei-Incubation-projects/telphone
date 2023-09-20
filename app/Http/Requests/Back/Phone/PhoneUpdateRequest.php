@@ -25,8 +25,7 @@ class PhoneUpdateRequest extends FormRequest
             //
             'id' => 'required|integer',
             'phone' => 'required|string|max:64',
-            'status'   => 'required|integer',
-            'batch'   => 'nullable|integer',
+            'status'   => 'nullable|integer',
         ];
     }
 }

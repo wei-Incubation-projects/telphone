@@ -25,7 +25,6 @@ class AdminUserResource extends JsonResource
             }),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-
         ];
         $this->menus() && $array['menus'] = $this->menus();
         return $array;

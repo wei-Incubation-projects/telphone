@@ -10,6 +10,7 @@ use App\Http\Requests\Back\Phone\PhoneShowRequest;
 use App\Http\Requests\Back\Phone\PhoneStoreRequest;
 use App\Http\Requests\Back\Phone\PhoneUpdateRequest;
 use App\Http\Resources\Back\PhoneResource;
+use App\Imports\PhoneImport;
 use App\Models\Phone;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -35,8 +36,9 @@ class PhoneController extends Controller
     {
         //
         $validated = $request->validated();
+        $validated['admin_id'] = auth('admin')->id();
         $model = Phone::create($validated);
-        return $model?->roles()->sync($validated['role']) ? Response::ok('ok') : Response::fail('no');
+        return $model ? Response::ok('ok') : Response::fail('no');
     }
 
     /**
@@ -57,8 +59,8 @@ class PhoneController extends Controller
         //
         $validated = $request->validated();
         $model = Phone::query()->findOrFail($request->id);
-        return $model->save($validated) && $model->roles()->sync($validated['role'])
-            ? Response::ok() : Response::fail();
+        $validated['admin_id'] = auth('admin')->id();
+        return $model->save($validated) ? Response::ok() : Response::fail();
     }
 
     /**
@@ -68,7 +70,21 @@ class PhoneController extends Controller
     {
         //
         $model = Phone::query()->findOrFail($request->id);
-        $model->roles()->detach();
         return  $model->delete() ? Response::ok() : Response::fail();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function upload(Object $request): JsonResponse|JsonResource
+    {
+        //
+        $request->validate(['file'=>'required|mimes:xls,xlsx,csv']);
+        if($request->hasFile('file')){
+            $file = $request->file('file');
+            \Maatwebsite\Excel\Facades\Excel::import(new PhoneImport(auth('admin')->id()),$file);
+            return Response::ok() ;
+        }
+        return Response::fail('上传失败');
     }
 }

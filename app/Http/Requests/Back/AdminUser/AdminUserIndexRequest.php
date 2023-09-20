@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Back\AdminUser;
 
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AdminUserIndexRequest extends FormRequest
@@ -19,7 +18,7 @@ class AdminUserIndexRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, ValidationRule|array|string>
+     * @return array<string, array|string>
      */
     public function rules(): array
     {
