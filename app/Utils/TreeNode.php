@@ -27,7 +27,7 @@ class TreeNode
 
         foreach ($nodes as $k => $node){
             $findPath = self::findParentPath($node, $nodes,$k);
-            $sanctum[$k] = $findPath ? $findPath . $node['path'] : $node['path'];
+            $sanctum[$k] = str_replace('/','',($findPath ? $findPath . $node['path'] : $node['path']));
         }
         return array_values($sanctum);
     }

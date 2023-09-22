@@ -15,16 +15,18 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        try {
+
 
          \App\Models\User::factory()->create([
              'name' => 'Test User',
-             'email' => 'abc',
+             'email' => 'test',
              'password' => password_hash('123456',null),
          ]);
 
         $root = \App\Models\AdminUser::create([
             'username' => 'Administrator',
-            'account' => 'root',
+            'account' => 'admin',
             'password' => password_hash('123456',PASSWORD_DEFAULT),
             'status' => '1',
         ]);
@@ -34,5 +36,8 @@ class DatabaseSeeder extends Seeder
             AdminMenuSeeder::class,
             AdminRoleSeeder::class,
         ]);
+        }catch (\Throwable $th){
+            $this->command->error($th->getMessage());
+        }
     }
 }

@@ -52,7 +52,20 @@ Route::prefix('back')->group(function (){
                 Route::post('tree', 'tree')->name('tree');
             });
 
-        Route::prefix('member')->name('member.')->middleware('auth:sanctum')
+    });
+
+    Route::prefix('phone')->name('phone.')->middleware('auth:sanctum')
+        ->controller(\App\Http\Controllers\Back\PhoneController::class)->group(function (){
+            Route::post('index', 'index')->name('index');
+            Route::post('create', 'store')->name('create');
+            Route::post('display', 'show')->name('display');
+            Route::post('modify', 'update')->name('modify');
+            Route::post('delete', 'destroy')->name('delete');
+            Route::post('upload', 'upload')->name('upload');
+        });
+
+    Route::prefix('member')->name('member.')->group(function (){
+        Route::prefix('user')->name('user.')->middleware('auth:sanctum')
             ->controller(\App\Http\Controllers\Back\UserController::class)->group(function (){
                 Route::post('index', 'index')->name('index');
                 Route::post('create', 'store')->name('create');
@@ -61,15 +74,6 @@ Route::prefix('back')->group(function (){
                 Route::post('delete', 'destroy')->name('delete');
             });
         Route::prefix('phone')->name('phone.')->middleware('auth:sanctum')
-            ->controller(\App\Http\Controllers\Back\PhoneController::class)->group(function (){
-                Route::post('index', 'index')->name('index');
-                Route::post('create', 'store')->name('create');
-                Route::post('display', 'show')->name('display');
-                Route::post('modify', 'update')->name('modify');
-                Route::post('delete', 'destroy')->name('delete');
-                Route::post('upload', 'upload')->name('upload');
-            });
-        Route::prefix('member-tel')->name('tel.')->middleware('auth:sanctum')
             ->controller(\App\Http\Controllers\Back\UserTelController::class)->group(function (){
                 Route::post('index', 'index')->name('index');
                 Route::post('create', 'store')->name('create');
