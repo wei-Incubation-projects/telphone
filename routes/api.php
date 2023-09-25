@@ -18,13 +18,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::prefix('back')->group(function (){
+
+    Route::prefix('auth')->name('auth.')->controller(\App\Http\Controllers\Back\AuthController::class)->group(function (){
+        Route::post('login', 'authenticate')->name('login');
+        Route::post('info', 'myInfo')->name('info')->middleware('auth:sanctum');
+        Route::post('password', 'password')->name('password')->middleware('auth:sanctum');
+        Route::post('logout', 'logout')->name('logout')->middleware('auth:sanctum');
+    });
+
     Route::prefix('admin')->name('admin.')->group(function (){
-        Route::prefix('auth')->name('auth.')->controller(\App\Http\Controllers\Back\AuthController::class)->group(function (){
-            Route::post('login', 'authenticate')->name('login');
-            Route::post('info', 'myInfo')->name('info')->middleware('auth:sanctum');
-            Route::post('password', 'password')->name('password')->middleware('auth:sanctum');
-            Route::post('logout', 'logout')->name('logout')->middleware('auth:sanctum');
-        });
         Route::prefix('user')->name('user.')->middleware('auth:sanctum')
             ->controller(\App\Http\Controllers\Back\AdminUserController::class)->group(function (){
                 Route::post('index', 'index')->name('index');

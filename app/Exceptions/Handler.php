@@ -65,7 +65,7 @@ class Handler extends ExceptionHandler
                 case $e instanceof MassAssignmentException:
             }
             return response()->json([
-                'code' => $e->getCode(),
+                'code' => $e->getCode() ?: $e->getStatus(),
                 'message' => $e->getMessage(),
                 'data'   => [],
             ]);
