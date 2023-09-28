@@ -22,6 +22,9 @@ return new class extends Migration
             $table->tinyInteger('type')->default(0)->comment('类型：0=目录,1=菜单,2=按钮');
             $table->tinyInteger('status')->default(1)->comment('状态');
             $table->integer('sort')->default(1)->comment('排序');
+            $table->string('uri')->default('')->comment('后端路由');
+            $table->string('component')->default('')->comment('组件');
+            $table->string('redirect')->default('')->comment('默认页面');
             $table->timestamps();
             $table->comment('菜单表');
         });

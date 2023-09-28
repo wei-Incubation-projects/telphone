@@ -60,12 +60,11 @@ class Handler extends ExceptionHandler
                 case $e instanceof BadMethodCallException:
                 case $e instanceof ValidationException:
                 case $e instanceof ModelNotFoundException:
-                    break;
                 case $e instanceof ErrorException:
                 case $e instanceof MassAssignmentException:
             }
             return response()->json([
-                'code' => $e->getCode() ?: $e->getStatus(),
+                'code' => $e->getCode() ?: 400,
                 'message' => $e->getMessage(),
                 'data'   => [],
             ]);
