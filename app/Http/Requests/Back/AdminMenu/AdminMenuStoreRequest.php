@@ -25,7 +25,7 @@ class AdminMenuStoreRequest extends FormRequest
             //
             'name' => 'required|string|unique:admin_menus',
             'title' => 'required|string',
-            'url' => 'required|string',
+            'component' => 'required|string',
             'path' => 'required|string',
             'icon' => 'nullable|string',
             'pid' => 'required|integer',

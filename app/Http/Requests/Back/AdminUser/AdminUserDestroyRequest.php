@@ -26,7 +26,7 @@ class AdminUserDestroyRequest extends FormRequest
     {
         return [
             //
-            'id' => 'required|integer',
+            'ids' => 'required|array',
         ];
     }
 }

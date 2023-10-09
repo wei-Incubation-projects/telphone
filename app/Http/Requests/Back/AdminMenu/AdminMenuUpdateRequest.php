@@ -26,7 +26,7 @@ class AdminMenuUpdateRequest extends FormRequest
             'id' => 'required|integer',
             'name' => 'required|string',
             'title' => 'required|string',
-            'url' => 'required|string',
+            'component' => 'required|string',
             'path' => 'required|string',
             'pid' => 'required|integer',
             'type' => 'required|integer',

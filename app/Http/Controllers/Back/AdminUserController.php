@@ -13,6 +13,7 @@ use App\Http\Resources\Back\AdminUserResource;
 use App\Models\AdminUser;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\DB;
 use Jiannei\Response\Laravel\Support\Facades\Response;
 
 class AdminUserController extends Controller
@@ -36,7 +37,7 @@ class AdminUserController extends Controller
         //
         $validated = $request->validated();
         $model = AdminUser::create($validated);
-        return $model?->roles()->sync($validated['role']) ? Response::ok('ok') : Response::fail('no');
+        return $model?->roles()->sync($validated['roles']) ? Response::ok('ok') : Response::fail('no');
     }
 
     /**
@@ -57,7 +58,7 @@ class AdminUserController extends Controller
         //
         $validated = $request->validated();
         $model = AdminUser::query()->findOrFail($request->id);
-        return $model->save($validated) && $model->roles()->sync($validated['role'])
+        return $model->fill(array_filter($validated))->save() && $model->roles()->sync($validated['roles'])
             ? Response::ok() : Response::fail();
     }
 
@@ -67,8 +68,16 @@ class AdminUserController extends Controller
     public function destroy(AdminUserDestroyRequest $request): JsonResponse|JsonResource
     {
         //
-        $model = AdminUser::query()->findOrFail($request->id);
-        $model->roles()->detach();
-        return  $model->delete() ? Response::ok() : Response::fail();
+        try{
+            DB::transaction(function ()use($request){
+                foreach ($request->ids as $id){
+                    $model = AdminUser::query()->findOrFail($id);
+                    $model->roles()->detach() && $model->delete();
+                }
+            });
+            return  Response::ok();
+        }catch (\Throwable $th){
+            return  Response::fail($th->getMessage());
+        }
     }
 }

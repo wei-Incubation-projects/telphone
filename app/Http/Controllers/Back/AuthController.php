@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Back\Auth\LoginRequest;
+use App\Http\Resources\Back\AdminMenuResource;
 use App\Http\Resources\Back\AdminUserResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -24,10 +25,10 @@ class AuthController extends Controller
             $token = $request->user('admin')
                 ->createToken($request->request->get('account'),$permission);
             return Response::success([
-                'type' => 'Bearer',
-                'token'=>$token->plainTextToken,
-                'expires_at' => config('sanctum.expiration'),
-            ]);
+                'token_type' => 'Bearer',
+                'access_token'=>$token->plainTextToken,
+                'expires_in' => config('sanctum.expiration'),
+            ],'ok');
         }
         return Response::fail('账号或密码不正确');
     }
@@ -45,5 +46,11 @@ class AuthController extends Controller
     {
         $user = $request->user('admin');
         return Response::success(new AdminUserResource($user));
+    }
+
+    public function menus(Request $request): JsonResponse|JsonResource
+    {
+        $menus = $request->user('admin')->menus();
+        return Response::success(new AdminMenuResource($menus));
     }
 }
