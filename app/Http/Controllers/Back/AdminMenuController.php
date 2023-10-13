@@ -26,7 +26,7 @@ class AdminMenuController extends Controller
     public function tree(): JsonResponse|JsonResource
     {
         //
-        $result = AdminMenu::query()->select('id','pid','title')->where('status',1)->orderBy('sort')->get();
+        $result = AdminMenu::query()->select('id','pid','title as label')->where('status',1)->orderBy('sort')->get();
         return Response::success(TreeNode::generateTree($result));
     }
 
@@ -37,7 +37,7 @@ class AdminMenuController extends Controller
     {
         //
         $model = AdminMenu::filter($filter)->get();
-        return Response::success(TreeNode::generateTree($model));
+        return Response::success(AdminMenuResource::collection($model));
     }
 
     /**

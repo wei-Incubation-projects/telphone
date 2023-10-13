@@ -23,9 +23,9 @@ class AdminRoleResource extends JsonResource
             'remark' => $this->remark,
             'status' => $this->status,
             'menus' => $this->when($this->shouldIncludeRoles(), function (){
-                return $this->menus->map(function ($item){
+                return array_column($this->menus->map(function ($item){
                     return $item->only(['id']);
-                });
+                })->toArray(),'id');
             },[]),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
