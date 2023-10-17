@@ -66,8 +66,8 @@ class UserTelController extends Controller
     public function destroy(UserTelDestroyRequest $request): JsonResponse|JsonResource
     {
         //
-        $model = UserPhone::query()->findOrFail($request->id);
-        return  $model->delete() ? Response::ok() : Response::fail();
+        return  UserPhone::query()->whereIn('id',$request->ids)->delete()
+            ? Response::ok() : Response::fail();
     }
 
 }

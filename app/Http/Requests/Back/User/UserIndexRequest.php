@@ -13,6 +13,7 @@ class UserIndexRequest extends FormRequest
     {
         $uri = explode('/',$this->route()->uri());
         return $this->user('admin')->tokenCan(implode(':', array_slice($uri,-3)));
+//        return true;
     }
 
     /**

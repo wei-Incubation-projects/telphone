@@ -13,6 +13,7 @@ use App\Http\Resources\Back\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\DB;
 use Jiannei\Response\Laravel\Support\Facades\Response;
 
 class UserController extends Controller
@@ -68,9 +69,17 @@ class UserController extends Controller
     public function destroy(UserDestroyRequest $request): JsonResponse|JsonResource
     {
         //
-        $model = User::query()->findOrFail($request->id);
-        $model->phones()->detach();
-        return  $model->delete() ? Response::ok() : Response::fail();
+        try{
+            DB::transaction(function ()use($request){
+                foreach ($request->ids as $id){
+                    $model = User::query()->findOrFail($id);
+                    $model->phones()->detach() && $model->delete();
+                }
+            });
+            return  Response::ok();
+        }catch (\Throwable $th){
+            return  Response::fail($th->getMessage());
+        }
     }
 
 }

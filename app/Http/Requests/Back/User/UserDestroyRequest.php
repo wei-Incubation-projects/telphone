@@ -23,7 +23,7 @@ class UserDestroyRequest extends FormRequest
     {
         return [
             //
-            'id' => 'required|integer',
+            'ids' => 'required|array',
         ];
     }
 }
