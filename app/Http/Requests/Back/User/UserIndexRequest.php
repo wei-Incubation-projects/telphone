@@ -11,9 +11,9 @@ class UserIndexRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $uri = explode('/',$this->route()->uri());
-        return $this->user('admin')->tokenCan(implode(':', array_slice($uri,-3)));
-//        return true;
+//        $uri = explode('/',$this->route()->uri());
+//        return $this->user('admin')->tokenCan(implode(':', array_slice($uri,-3)));
+        return true;
     }
 
     /**
