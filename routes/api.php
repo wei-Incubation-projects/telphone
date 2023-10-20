@@ -17,19 +17,20 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::prefix('back')->group(function (){
+Route::prefix('back')->group(function () {
 
-    Route::prefix('auth')->name('auth.')->controller(\App\Http\Controllers\Back\AuthController::class)->group(function (){
+    Route::prefix('auth')->name('auth.')->controller(\App\Http\Controllers\Back\AuthController::class)->group(function () {
         Route::post('login', 'authenticate')->name('login');
         Route::post('info', 'myInfo')->name('info')->middleware('auth:sanctum');
         Route::post('menus', 'menus')->name('menus')->middleware('auth:sanctum');
         Route::post('password', 'password')->name('password')->middleware('auth:sanctum');
         Route::post('logout', 'logout')->name('logout')->middleware('auth:sanctum');
+        Route::post('refresh', 'refresh')->name('refresh')->middleware('auth:sanctum');
     });
 
-    Route::prefix('admin')->name('admin.')->group(function (){
+    Route::prefix('admin')->name('admin.')->group(function () {
         Route::prefix('user')->name('user.')->middleware('auth:sanctum')
-            ->controller(\App\Http\Controllers\Back\AdminUserController::class)->group(function (){
+            ->controller(\App\Http\Controllers\Back\AdminUserController::class)->group(function () {
                 Route::post('index', 'index')->name('index');
                 Route::post('create', 'store')->name('create');
                 Route::post('display', 'show')->name('display');
@@ -37,7 +38,7 @@ Route::prefix('back')->group(function (){
                 Route::post('delete', 'destroy')->name('delete');
             });
         Route::prefix('role')->name('role.')->middleware('auth:sanctum')
-            ->controller(\App\Http\Controllers\Back\AdminRoleController::class)->group(function (){
+            ->controller(\App\Http\Controllers\Back\AdminRoleController::class)->group(function () {
                 Route::post('index', 'index')->name('index');
                 Route::post('create', 'store')->name('create');
                 Route::post('display', 'show')->name('display');
@@ -46,7 +47,7 @@ Route::prefix('back')->group(function (){
                 Route::post('list', 'getAll')->name('list');
             });
         Route::prefix('menu')->name('menu.')->middleware('auth:sanctum')
-            ->controller(\App\Http\Controllers\Back\AdminMenuController::class)->group(function (){
+            ->controller(\App\Http\Controllers\Back\AdminMenuController::class)->group(function () {
                 Route::post('index', 'index')->name('index');
                 Route::post('create', 'store')->name('create');
                 Route::post('display', 'show')->name('display');
@@ -58,7 +59,7 @@ Route::prefix('back')->group(function (){
     });
 
     Route::prefix('phone')->name('phone.')->middleware('auth:sanctum')
-        ->controller(\App\Http\Controllers\Back\PhoneController::class)->group(function (){
+        ->controller(\App\Http\Controllers\Back\PhoneController::class)->group(function () {
             Route::post('index', 'index')->name('index');
             Route::post('create', 'store')->name('create');
             Route::post('display', 'show')->name('display');
@@ -67,9 +68,9 @@ Route::prefix('back')->group(function (){
             Route::post('upload', 'upload')->name('upload');
         });
 
-    Route::prefix('member')->name('member.')->group(function (){
+    Route::prefix('member')->name('member.')->group(function () {
         Route::prefix('user')->name('user.')->middleware('auth:sanctum')
-            ->controller(\App\Http\Controllers\Back\UserController::class)->group(function (){
+            ->controller(\App\Http\Controllers\Back\UserController::class)->group(function () {
                 Route::post('index', 'index')->name('index');
                 Route::post('create', 'store')->name('create');
                 Route::post('display', 'show')->name('display');
@@ -77,7 +78,7 @@ Route::prefix('back')->group(function (){
                 Route::post('delete', 'destroy')->name('delete');
             });
         Route::prefix('phone')->name('phone.')->middleware('auth:sanctum')
-            ->controller(\App\Http\Controllers\Back\UserTelController::class)->group(function (){
+            ->controller(\App\Http\Controllers\Back\UserTelController::class)->group(function () {
                 Route::post('index', 'index')->name('index');
                 Route::post('create', 'store')->name('create');
                 Route::post('display', 'show')->name('display');
@@ -85,4 +86,11 @@ Route::prefix('back')->group(function (){
                 Route::post('delete', 'destroy')->name('delete');
             });
     });
+
+    Route::prefix('stat')->name('stat.')->middleware('auth:sanctum')
+        ->controller(\App\Http\Controllers\Back\StatController::class)->group(function () {
+            Route::post('summary', 'summary')->name('summary');
+            Route::post('report', 'report')->name('report');
+            Route::post('batch', 'batch')->name('batch');
+        });
 });

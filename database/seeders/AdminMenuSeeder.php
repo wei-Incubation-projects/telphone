@@ -215,11 +215,11 @@ class AdminMenuSeeder extends Seeder
 
         $phone = AdminMenu::create([
             'name' => 'Phone',
-            'title' => '电话',
+            'title' => '数据管理',
             'path' => '/phone',
             'component' => 'AdminLayout',
             'route' => 'phone',
-            'redirect' => '/phone/list',
+            'redirect' => '/phone/index',
             'icon' => '',
             'pid' => 0,
             'type' => 1,
@@ -227,8 +227,8 @@ class AdminMenuSeeder extends Seeder
         AdminMenu::insert([
             [
                 'name' => 'PhoneList',
-                'title' => '电话列表',
-                'path' => 'list',
+                'title' => '数据列表',
+                'path' => 'index',
                 'component' => 'phone/index',
                 'route' => 'index',
                 'icon' => '',
@@ -287,21 +287,65 @@ class AdminMenuSeeder extends Seeder
             ],
         ]);
 
-        $member = AdminMenu::create([
-            'name' => 'Member',
-            'title' => '会员',
-            'path' => '/member',
+        $stat = AdminMenu::create([
+            'name' => 'Stat',
+            'title' => '推广统计',
+            'path' => '/stat',
             'component' => 'AdminLayout',
             'route' => 'phone',
-            'redirect' => '/member/user',
+            'redirect' => '/stat/summary',
+            'icon' => 'ri:bookmark-line',
+            'pid' => 0,
+            'type' => 0,
+        ]);
+        AdminMenu::insert([
+            [
+                'name' => 'StatSummary',
+                'title' => '数据列表',
+                'path' => 'summary',
+                'component' => 'stat/summary/index',
+                'route' => 'summary',
+                'icon' => '',
+                'pid' => $stat->id,
+                'type' => 2,
+            ],
+            [
+                'name' => 'StatReport',
+                'title' => '电销统计',
+                'path' => 'report',
+                'component' => 'stat/report/index',
+                'route' => 'report',
+                'icon' => '',
+                'pid' => $stat->id,
+                'type' => 2,
+            ],
+            [
+                'name' => 'StatBatch',
+                'title' => '批次统计',
+                'path' => 'batch',
+                'component' => 'stat/batch/index',
+                'route' => 'batch',
+                'icon' => '',
+                'pid' => $stat->id,
+                'type' => 2,
+            ],
+        ]);
+
+        $member = AdminMenu::create([
+            'name' => 'Member',
+            'title' => '用户管理',
+            'path' => '/member',
+            'component' => 'AdminLayout',
+            'route' => 'member',
+            'redirect' => '/member/users',
             'icon' => '',
             'pid' => 0,
             'type' => 0,
         ]);
         $user = AdminMenu::create([
             'name' => 'MemberUser',
-            'title' => '会员管理',
-            'path' => 'user',
+            'title' => '组员管理',
+            'path' => 'users',
             'component' => 'member/user/index',
             'route' => 'user',
             'icon' => '',
@@ -361,19 +405,19 @@ class AdminMenuSeeder extends Seeder
             ],
         ]);
         $tel = AdminMenu::create([
-            'name' => 'MemberPhone',
-            'title' => '号码薄',
-            'path' => 'phone',
-            'component' => 'member/phone/index',
-            'route' => 'phone',
+            'name' => 'MemberLeader',
+            'title' => '电销组长',
+            'path' => 'leader',
+            'component' => 'member/leader/index',
+            'route' => 'user',
             'icon' => '',
             'pid' => $member->id,
             'type' => 1,
         ]);
         AdminMenu::insert([
             [
-                'name' => 'MemberPhoneList',
-                'title' => '号码列表',
+                'name' => 'MemberLeaderList',
+                'title' => '电销组长',
                 'path' => 'list',
                 'component' => '',
                 'route' => 'index',
@@ -382,8 +426,8 @@ class AdminMenuSeeder extends Seeder
                 'type' => 2,
             ],
             [
-                'name' => 'MemberPhoneShow',
-                'title' => '显示号码',
+                'name' => 'MemberLeaderShow',
+                'title' => '显示组长',
                 'path' => 'show',
                 'component' => '',
                 'route' => 'display',
@@ -392,8 +436,8 @@ class AdminMenuSeeder extends Seeder
                 'type' => 2,
             ],
             [
-                'name' => 'MemberPhoneAdd',
-                'title' => '新增号码',
+                'name' => 'MemberLeaderAdd',
+                'title' => '新增组长',
                 'path' => 'add',
                 'component' => '',
                 'route' => 'create',
@@ -402,8 +446,8 @@ class AdminMenuSeeder extends Seeder
                 'type' => 2,
             ],
             [
-                'name' => 'MemberPhoneMod',
-                'title' => '修改号码',
+                'name' => 'MemberLeaderMod',
+                'title' => '修改组长',
                 'path' => 'update',
                 'component' => '',
                 'route' => 'modify',
@@ -412,8 +456,8 @@ class AdminMenuSeeder extends Seeder
                 'type' => 2,
             ],
             [
-                'name' => 'MemberPhoneDel',
-                'title' => '删除号码',
+                'name' => 'MemberLeaderDel',
+                'title' => '删除组长',
                 'path' => 'del',
                 'component' => '',
                 'route' => 'delete',
@@ -422,5 +466,7 @@ class AdminMenuSeeder extends Seeder
                 'type' => 2,
             ],
         ]);
+
+
     }
 }

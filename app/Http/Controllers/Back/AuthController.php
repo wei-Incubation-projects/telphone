@@ -23,7 +23,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
             $permission = Auth::guard('admin')->user()->permissions();
             $token = $request->user('admin')
-                ->createToken($request->request->get('account'),$permission);
+                ->createToken('Auth:'.$request->request->get('account'),$permission);
             return Response::success([
                 'token_type' => 'Bearer',
                 'access_token'=>$token->plainTextToken,
@@ -52,5 +52,17 @@ class AuthController extends Controller
     {
         $menus = $request->user('admin')->menus();
         return Response::success(new AdminMenuResource($menus));
+    }
+    public function refresh(Request $request): JsonResponse|JsonResource
+    {
+        $request->session()->regenerate();
+        $permission = Auth::guard('admin')->user()->permissions();
+        $token = $request->user('admin')
+            ->createToken('Auth:'.$request->request->get('account'),$permission);
+        return Response::success([
+            'token_type' => 'Bearer',
+            'access_token'=>$token->plainTextToken,
+            'expires_in' => config('sanctum.expiration'),
+        ],'ok');
     }
 }
