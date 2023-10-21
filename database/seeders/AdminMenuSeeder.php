@@ -509,6 +509,61 @@ class AdminMenuSeeder extends Seeder
             ],
         ]);
 
+        $setting = AdminMenu::create([
+            'name' => 'Setting',
+            'title' => '设置',
+            'path' => '/setting',
+            'component' => 'AdminLayout',
+            'route' => 'setting',
+            'icon' => '',
+            'pid' => 0,
+            'type' => 1,
+        ]);
+        $ipWhite = AdminMenu::create([
+            'name' => 'SettingIPWhite',
+            'title' => 'IP白名单',
+            'path' => '/ips',
+            'component' => 'setting/ip/index',
+            'route' => 'ips',
+            'icon' => '',
+            'pid' => $setting->id,
+            'type' => 1,
+        ]);
+        AdminMenu::insert([
+            [
+                'name' => 'SettingIPWhiteList',
+                'title' => '白名单列表',
+                'path' => 'index',
+                'component' => '',
+                'route' => 'index',
+                'icon' => '',
+                'pid' => $ipWhite->id,
+                'type' => 2,
+            ],
+        ]);
 
+        $system = AdminMenu::create([
+            'name' => 'SettingSystem',
+            'title' => '系统设置',
+            'path' => 'system',
+            'component' => 'setting/system/index',
+            'route' => 'system',
+            'icon' => '',
+            'pid' => $setting->id,
+            'type' => 1,
+        ]);
+
+        AdminMenu::insert([
+            [
+                'name' => 'SettingSystemSave',
+                'title' => '保存系统设置',
+                'path' => 'save',
+                'component' => '',
+                'route' => 'save',
+                'icon' => '',
+                'pid' => $system->id,
+                'type' => 2,
+            ],
+        ]);
     }
 }
