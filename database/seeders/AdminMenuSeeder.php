@@ -14,6 +14,18 @@ class AdminMenuSeeder extends Seeder
     public function run(): void
     {
         //
+        AdminMenu::create([
+            'name' => 'Home',
+            'title' => '首页',
+            'path' => '/home',
+            'component' => 'AdminLayout',
+            'route' => 'index',
+            'redirect' => '/home/dashboard',
+            'icon' => '',
+            'pid' => 0,
+            'type' => 0,
+        ]);
+
         $admin = AdminMenu::create([
             'name' => 'Admin',
             'title' => '系统管理',
@@ -355,7 +367,7 @@ class AdminMenuSeeder extends Seeder
         AdminMenu::insert([
             [
                 'name' => 'MemberUserList',
-                'title' => '会员列表',
+                'title' => '组员列表',
                 'path' => 'list',
                 'component' => '',
                 'route' => 'index',
@@ -365,7 +377,7 @@ class AdminMenuSeeder extends Seeder
             ],
             [
                 'name' => 'MemberUserShow',
-                'title' => '显示会员',
+                'title' => '显示组员',
                 'path' => 'show',
                 'component' => '',
                 'route' => 'display',
@@ -375,7 +387,7 @@ class AdminMenuSeeder extends Seeder
             ],
             [
                 'name' => 'MemberUserAdd',
-                'title' => '新增会员',
+                'title' => '新增组员',
                 'path' => 'add',
                 'component' => '',
                 'route' => 'create',
@@ -385,7 +397,7 @@ class AdminMenuSeeder extends Seeder
             ],
             [
                 'name' => 'MemberUserMod',
-                'title' => '修改会员',
+                'title' => '修改组员',
                 'path' => 'update',
                 'component' => '',
                 'route' => 'modify',
@@ -395,10 +407,30 @@ class AdminMenuSeeder extends Seeder
             ],
             [
                 'name' => 'MemberUserDel',
-                'title' => '删除会员',
+                'title' => '删除组员',
                 'path' => 'del',
                 'component' => '',
                 'route' => 'delete',
+                'icon' => '',
+                'pid' => $user->id,
+                'type' => 2,
+            ],
+            [
+                'name' => 'MemberUserBatch',
+                'title' => '批量组员',
+                'path' => 'batch',
+                'component' => '',
+                'route' => 'batch',
+                'icon' => '',
+                'pid' => $user->id,
+                'type' => 2,
+            ],
+            [
+                'name' => 'MemberUserTelStat',
+                'title' => '拨打统计',
+                'path' => 'telStat',
+                'component' => '',
+                'route' => 'stat',
                 'icon' => '',
                 'pid' => $user->id,
                 'type' => 2,
@@ -463,6 +495,16 @@ class AdminMenuSeeder extends Seeder
                 'route' => 'delete',
                 'icon' => '',
                 'pid' => $tel->id,
+                'type' => 2,
+            ],
+            [
+                'name' => 'MemberLeaderTelStat',
+                'title' => '拨打统计',
+                'path' => 'telStat',
+                'component' => '',
+                'route' => 'stat',
+                'icon' => '',
+                'pid' => $user->id,
                 'type' => 2,
             ],
         ]);
