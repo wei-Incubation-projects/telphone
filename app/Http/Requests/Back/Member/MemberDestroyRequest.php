@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Back\User;
+namespace App\Http\Requests\Back\Member;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserDestroyRequest extends FormRequest
+class MemberDestroyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

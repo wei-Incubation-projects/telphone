@@ -77,8 +77,8 @@ Route::prefix('back')->group(function () {
                 Route::post('modify', 'update')->name('modify');
                 Route::post('delete', 'destroy')->name('delete');
             });
-        Route::prefix('phone')->name('phone.')->middleware('auth:sanctum')
-            ->controller(\App\Http\Controllers\Back\UserTelController::class)->group(function () {
+        Route::prefix('leader')->name('leader.')->middleware('auth:sanctum')
+            ->controller(\App\Http\Controllers\Back\LeaderController::class)->group(function () {
                 Route::post('index', 'index')->name('index');
                 Route::post('create', 'store')->name('create');
                 Route::post('display', 'show')->name('display');

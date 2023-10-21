@@ -2,10 +2,9 @@
 
 namespace App\Http\Resources\Back;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class LeaderResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +15,12 @@ class UserResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'leader_id' => $this->leader_id,
-            'type' => $this->type,
             'username' => $this->username,
             'phone' => $this->phone,
             'email' => $this->email,
+            'encry' => $this->encry,
+            'upload' => $this->upload,
+            'in_leader' => $this->in_leader,
             'status' => $this->status,
             'callback' => $this->callback,
             'created_at' => $this->created_at,

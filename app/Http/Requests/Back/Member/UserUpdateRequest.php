@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Back\User;
+namespace App\Http\Requests\Back\Member;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,10 +24,14 @@ class UserUpdateRequest extends FormRequest
         return [
             //
             'id' => 'required|integer',
-            'name' => 'required|string|max:20',
-            'email'  => 'required|string|min:4,max:64|unique:admin_users',
+            'leader_id' => 'required|integer',
+            'type'  => 'required|integer',
+            'username' => 'required|string|max:20',
             'password'  => 'nullable|string|min:6,max:64',
+            'phone' => 'nullable|string',
+            'email'  => 'nullable|string|min:4,max:64',
             'status'   => 'required|integer',
+            'callback' => 'nullable|integer',
         ];
     }
 }

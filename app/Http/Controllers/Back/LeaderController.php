@@ -4,18 +4,18 @@ namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
 use App\Http\Filters\UserFilter;
+use App\Http\Requests\Back\Member\LeaderStoreRequest;
+use App\Http\Requests\Back\Member\LeaderUpdateRequest;
 use App\Http\Requests\Back\Member\MemberDestroyRequest;
 use App\Http\Requests\Back\Member\MemberIndexRequest;
 use App\Http\Requests\Back\Member\MemberShowRequest;
-use App\Http\Requests\Back\Member\UserStoreRequest;
-use App\Http\Requests\Back\Member\UserUpdateRequest;
 use App\Http\Resources\Back\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Jiannei\Response\Laravel\Support\Facades\Response;
 
-class UserController extends Controller
+class LeaderController extends Controller
 {
 
     /**
@@ -24,14 +24,14 @@ class UserController extends Controller
     public function index(MemberIndexRequest $request, UserFilter $filter): JsonResponse|JsonResource
     {
         //
-        $model = User::filter($filter)->where('is_leader',0)->simplePaginate();
+        $model = User::filter($filter)->where('is_leader',1)->simplePaginate();
         return Response::success(UserResource::collection($model));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(UserStoreRequest $request): JsonResponse|JsonResource
+    public function store(LeaderStoreRequest $request): JsonResponse|JsonResource
     {
         //
         $model = User::create($request->validated());
@@ -51,7 +51,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UserUpdateRequest $request): JsonResponse|JsonResource
+    public function update(LeaderUpdateRequest $request): JsonResponse|JsonResource
     {
         //
         $model = User::query()->findOrFail($request->id);
