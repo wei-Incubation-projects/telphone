@@ -23,8 +23,7 @@ class PhoneUpdateRequest extends FormRequest
     {
         return [
             //
-            'id' => 'required|integer',
-            'phone' => 'required|string|max:64',
+            'leader_id' => 'nullable|integer',
             'status'   => 'nullable|integer',
         ];
     }

@@ -34,7 +34,7 @@ class LeaderController extends Controller
     public function store(LeaderStoreRequest $request): JsonResponse|JsonResource
     {
         //
-        $model = User::create($request->validated());
+        $model = User::create(array_merge($request->validated(),['is_leader'=>1]));
         return $model ? Response::ok('ok') : Response::fail('no');
     }
 
@@ -55,7 +55,7 @@ class LeaderController extends Controller
     {
         //
         $model = User::query()->findOrFail($request->id);
-        return $model->save($request->validated()) ? Response::ok() : Response::fail();
+        return $model->save(array_merge($request->validated(),['is_leader'=>1])) ? Response::ok() : Response::fail();
     }
 
     /**
@@ -72,4 +72,23 @@ class LeaderController extends Controller
         }
     }
 
+    /**
+     * Display a listing of the resource.
+     */
+    public function all(): JsonResponse|JsonResource
+    {
+        //
+        $model = User::where('is_leader',1)->get();
+        return Response::success(UserResource::collection($model));
+    }
+
+    /**
+     * Stat a listing of the resource.
+     */
+    public function stat(): JsonResponse|JsonResource
+    {
+        //
+        $model = User::where('is_leader',1)->get();
+        return Response::success(UserResource::collection($model));
+    }
 }

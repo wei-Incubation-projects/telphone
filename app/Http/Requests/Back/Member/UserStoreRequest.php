@@ -29,7 +29,7 @@ class UserStoreRequest extends FormRequest
             'password'  => 'nullable|string|min:6,max:64',
             'phone' => 'nullable|string',
             'email'  => 'nullable|string|min:4,max:64',
-            'status'   => 'required|integer',
+            'status'   => 'nullable|integer',
             'callback' => 'nullable|integer',
         ];
     }

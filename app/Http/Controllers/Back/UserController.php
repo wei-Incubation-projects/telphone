@@ -13,6 +13,7 @@ use App\Http\Resources\Back\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\DB;
 use Jiannei\Response\Laravel\Support\Facades\Response;
 
 class UserController extends Controller
@@ -55,7 +56,7 @@ class UserController extends Controller
     {
         //
         $model = User::query()->findOrFail($request->id);
-        return $model->save($request->validated()) ? Response::ok() : Response::fail();
+        return $model->fill($request->validated())->save() ? Response::ok() : Response::fail();
     }
 
     /**
@@ -65,11 +66,33 @@ class UserController extends Controller
     {
         //
         try{
-            User::query()->findOrFail($request->id)->delete();
+            DB::transaction(function ()use($request){
+                foreach ($request->ids as $id){
+                    User::query()->findOrFail($id)->delete();
+                }
+            });
             return  Response::ok();
         }catch (\Throwable $th){
             return  Response::fail($th->getMessage());
         }
     }
+    /**
+     * Batch a newly created resource in storage.
+     */
+    public function batch(UserStoreRequest $request): JsonResponse|JsonResource
+    {
+        //
+        $model = User::create($request->validated());
+        return $model ? Response::ok('ok') : Response::fail('no');
+    }
 
+    /**
+     * Stat a listing of the resource.
+     */
+    public function stat(): JsonResponse|JsonResource
+    {
+        //
+        $model = User::where('is_leader',1)->get();
+        return Response::success(UserResource::collection($model));
+    }
 }

@@ -23,7 +23,7 @@ class PhoneDestroyRequest extends FormRequest
     {
         return [
             //
-            'id' => 'required|integer',
+            'batch' => 'required|integer',
         ];
     }
 }

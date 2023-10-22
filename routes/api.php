@@ -26,6 +26,7 @@ Route::prefix('back')->group(function () {
         Route::post('password', 'password')->name('password')->middleware('auth:sanctum');
         Route::post('logout', 'logout')->name('logout')->middleware('auth:sanctum');
         Route::post('refresh', 'refresh')->name('refresh')->middleware('auth:sanctum');
+
     });
 
     Route::prefix('admin')->name('admin.')->group(function () {
@@ -62,10 +63,11 @@ Route::prefix('back')->group(function () {
         ->controller(\App\Http\Controllers\Back\PhoneController::class)->group(function () {
             Route::post('index', 'index')->name('index');
             Route::post('create', 'store')->name('create');
-            Route::post('display', 'show')->name('display');
-            Route::post('modify', 'update')->name('modify');
+            Route::post('export', 'export')->name('export');
+            Route::post('clear', 'clear')->name('clear');
             Route::post('delete', 'destroy')->name('delete');
             Route::post('upload', 'upload')->name('upload');
+            Route::post('batch', 'batchs')->name('batch');
         });
 
     Route::prefix('member')->name('member.')->group(function () {
@@ -76,6 +78,8 @@ Route::prefix('back')->group(function () {
                 Route::post('display', 'show')->name('display');
                 Route::post('modify', 'update')->name('modify');
                 Route::post('delete', 'destroy')->name('delete');
+                Route::post('batch', 'batch')->name('batch');
+                Route::post('stat', 'stat')->name('stat');
             });
         Route::prefix('leader')->name('leader.')->middleware('auth:sanctum')
             ->controller(\App\Http\Controllers\Back\LeaderController::class)->group(function () {
@@ -84,6 +88,8 @@ Route::prefix('back')->group(function () {
                 Route::post('display', 'show')->name('display');
                 Route::post('modify', 'update')->name('modify');
                 Route::post('delete', 'destroy')->name('delete');
+                Route::post('list', 'all')->name('list');
+                Route::post('stat', 'stat')->name('stat');
             });
     });
 

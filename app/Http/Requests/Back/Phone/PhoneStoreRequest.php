@@ -23,8 +23,8 @@ class PhoneStoreRequest extends FormRequest
     {
         return [
             //
-            'phone' => 'required|string|max:64|unique:tel_phone',
-            'status'   => 'nullable|integer',
+            'leader_id' => 'required|integer',
+            'file'   => 'required|string',
         ];
     }
 }

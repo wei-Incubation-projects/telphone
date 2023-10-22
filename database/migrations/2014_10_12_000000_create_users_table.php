@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('phone')->default('')->comment('电话');
             $table->string('email')->default('')->comment('邮件');
             $table->tinyInteger('status')->default(1)->comment('是否启用');
-            $table->tinyInteger('callback')->default(1)->comment('能否复播');
+            $table->tinyInteger('callback')->default(0)->comment('能否复播');
             $table->timestamp('lasted_at')->nullable()->comment('上次登录时间');
             $table->string('lasted_ip')->nullable()->default('')->comment('上次登录IP');
             $table->integer('leader_id')->default(0)->comment('组长id');

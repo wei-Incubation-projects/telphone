@@ -19,7 +19,7 @@ class PhoneResource extends JsonResource
         return [
             'id' => $this->id,
             'phone' => $this->phone,
-            'agent' => $this->agent->username,
+            'leader_id' => $this->leader_id,
             'status' => $this->status,
             'batch' => $this->batch,
             'created_at' => $this->created_at,

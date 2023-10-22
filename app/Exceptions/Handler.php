@@ -62,10 +62,10 @@ class Handler extends ExceptionHandler
             $code = $e->getCode();
             switch ($e){
                 case $e instanceof AuthenticationException:
-                    $code = 403;
+                    $code = 401;
                     break;
                 case $e instanceof AuthorizationException:
-                    $code = 401;
+                    $code = 403;
                     break;
                 case $e instanceof BadMethodCallException:
                 case $e instanceof ValidationException:

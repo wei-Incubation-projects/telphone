@@ -29,11 +29,11 @@ class LeaderUpdateRequest extends FormRequest
             'password'  => 'nullable|string|min:6,max:64',
             'phone' => 'nullable|string',
             'email'  => 'nullable|string|min:4,max:64',
-            'encry'   => 'required|integer',
-            'upload'   => 'required|integer',
-            'in_leader'   => 'required|integer',
-            'callback'   => 'required|integer',
-            'status'   => 'required|integer',
+            'encry'   => 'nullable|integer',
+            'upload'   => 'nullable|integer',
+            'in_leader'   => 'nullable|integer',
+            'callback'   => 'nullable|integer',
+            'status'   => 'nullable|integer',
         ];
     }
 }
