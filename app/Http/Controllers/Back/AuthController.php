@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 use Jiannei\Response\Laravel\Support\Facades\Response;
+use ReflectionClass;
 
 class AuthController extends Controller
 {
@@ -35,10 +36,8 @@ class AuthController extends Controller
 
     public function logout(Request $request): JsonResponse|JsonResource
     {
-        Auth::guard('admin')->logout();
         $request->session()->regenerateToken();
-        $request->user('admin')->currentAccessToken()->delete();
-
+        Auth::guard('admin')->logout();
         return Response::ok();
     }
 

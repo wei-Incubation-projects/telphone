@@ -59,7 +59,7 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $e)
     {
         if($request->acceptsJson()){
-            $code = $e->getCode();
+            $code = $e->getCode() ?: 500;
             switch ($e){
                 case $e instanceof AuthenticationException:
                     $code = 401;
