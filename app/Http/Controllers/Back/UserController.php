@@ -35,7 +35,9 @@ class UserController extends Controller
     public function store(UserStoreRequest $request): JsonResponse|JsonResource
     {
         //
-        $model = User::create($request->validated());
+        $data = $request->validated();
+        if(!empty($data['password'])) $data['password'] = password_hash($data['password'],PASSWORD_DEFAULT);
+        $model = User::create();
         return $model ? Response::ok('ok') : Response::fail('no');
     }
 
@@ -56,7 +58,9 @@ class UserController extends Controller
     {
         //
         $model = User::query()->findOrFail($request->id);
-        return $model->fill($request->validated())->save() ? Response::ok() : Response::fail();
+        $data = $request->validated();
+        if(!empty($data['password'])) $data['password'] = password_hash($data['password'],PASSWORD_DEFAULT);
+        return $model->fill($data)->save() ? Response::ok() : Response::fail();
     }
 
     /**
