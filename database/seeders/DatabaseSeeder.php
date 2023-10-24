@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
 
 
          \App\Models\User::factory()->create([
-             'username' => 'Test User',
+             'username' => 'test01',
              'email' => 'test',
              'password' => password_hash('123456',null),
          ]);
