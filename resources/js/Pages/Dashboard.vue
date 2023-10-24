@@ -3,7 +3,8 @@ import TabbarLayout from '@/Layouts/TabbarLayout.vue'
 import { Head } from '@inertiajs/vue3';
 import {ref} from "vue";
 const props = defineProps({
-
+    status: Array,
+    count: Number
 })
 const onSearch = (value)=>{
     console.log(value)
@@ -19,6 +20,7 @@ const deletePhone = ()=>{
 const onClickButton = ()=>{
 
 }
+console.log(props.count)
 </script>
 
 <template>
@@ -43,13 +45,13 @@ const onClickButton = ()=>{
             </template>
         </van-search>
         <div class="w-full mt-4 text-sm flex flex-wrap">
-            <div class="px-1 mr-2 mb-1 rounded-lg bg-blue-400">当日总量：200</div>
-            <div class="px-1 mr-2 mb-1 rounded-lg bg-gray-400">已接通：13</div>
-            <div class="px-1 mr-2 mb-1 rounded-lg bg-green-400">已同意：1</div>
-            <div class="px-1 mr-2 mb-1 rounded-lg bg-red-400">直接挂断: 90</div>
-            <div class="px-1 mr-2 mb-1 rounded-lg bg-red-400">拒绝：26</div>
-            <div class="px-1 mr-2 mb-1 rounded-lg bg-green-400">未接通(通话中/语音助手/在忙稍后回电): 56</div>
-            <div class="px-1 mr-2 mb-1 rounded-lg bg-yellow-400">关机/停机/空号: 14</div>
+            <div class="px-1 mr-2 mb-1 rounded-lg bg-blue-400">当日总量：{{ count }}</div>
+            <div class="px-1 mr-2 mb-1 rounded-lg bg-gray-400">已接通：{{status[1]}}</div>
+            <div class="px-1 mr-2 mb-1 rounded-lg bg-green-400">已同意：{{status[2]}}</div>
+            <div class="px-1 mr-2 mb-1 rounded-lg bg-red-400">直接挂断: {{status[5]}}</div>
+            <div class="px-1 mr-2 mb-1 rounded-lg bg-red-400">拒绝：{{status[4]}}</div>
+            <div class="px-1 mr-2 mb-1 rounded-lg bg-green-400">未接通(通话中/语音助手/在忙稍后回电): {{status[3]}}</div>
+            <div class="px-1 mr-2 mb-1 rounded-lg bg-yellow-400">关机/停机/空号: {{status[-1]}}</div>
         </div>
         <div class="w-full mt-8 bg-white flex flex-col justify-evenly items-center">
             <div class="w-full pl-2 text-sm leading-10 border-b-2 text-base">客户数据</div>
