@@ -7,7 +7,7 @@ class Phone extends BaseModel
 
     protected $table = 'tel_phone';
 
-    protected $fillable = ['id', 'phone', 'leader_id', 'status', 'batch', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'phone', 'leader_id', 'status', 'batch', '','created_at', 'updated_at'];
 //    protected $dateFormat = 'U';
 
     public static array $statusText = [

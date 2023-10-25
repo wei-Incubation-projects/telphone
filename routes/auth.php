@@ -35,15 +35,20 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [PublicController::class,'index'])
-        ->middleware(['auth', 'verified'])->name('dashboard');
+        ->middleware(['auth'])->name('dashboard');
+
+    Route::post('search', [PublicController::class,'search'])
+        ->middleware(['auth'])->name('search');
+    Route::post('telphone', [PublicController::class,'telphone'])
+        ->middleware(['auth'])->name('telphone');
 
     Route::get('/recall', function () {
         return Inertia::render('Recall');
-    })->middleware(['auth', 'verified'])->name('recall');
+    })->middleware(['auth'])->name('recall');
 
     Route::get('/mine', function () {
         return Inertia::render('Mine');
-    })->middleware(['auth', 'verified'])->name('mine');
+    })->middleware(['auth'])->name('mine');
 
 
     Route::get('verify-email', EmailVerificationPromptController::class)

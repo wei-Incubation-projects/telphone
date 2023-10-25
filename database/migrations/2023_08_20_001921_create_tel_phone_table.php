@@ -19,6 +19,7 @@ class CreateTelPhoneTable extends Migration
             $table->integer('status')->default(0)->comment('状态：1可用，0禁用');
             $table->integer('leader_id')->default(0)->comment('管理员ID');
             $table->integer('batch')->default(0)->comment('批次');
+            $table->text('remark')->nullable()->comment('备注信息');
             $table->timestamps();
             $table->comment('号码库');
         });
