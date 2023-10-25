@@ -109,7 +109,7 @@ const onTelPhone = (phoneNumber)=>{
         <div class="w-full mt-8 bg-white flex flex-col justify-evenly items-center">
             <div class="w-full pl-2 text-sm leading-10 border-b-2 text-base">客户数据</div>
             <div class="w-full h-20 border-b-2 pl-8 text-sm text-gray-400 flex flex-col justify-evenly">
-                <div @click.prevent="onTelPhone">客户手机号：{{ tel.phone }}</div>
+                <div @click.prevent="onTelPhone(tel.phone)">客户手机号：{{ tel.phone }}</div>
                 <div >获取数据时间：{{ tel.created_at }}</div>
             </div>
         </div>
@@ -137,7 +137,7 @@ const onTelPhone = (phoneNumber)=>{
             </div>
             <div class="w-full mt-1 text-sm leading-8 flex justify-between" @click="selectStatus(-1)">
                 <div class="text-yellow-400">关机/停机/空号</div>
-                <div class="leading-loose text-red-300" v-if="tel.status === 6">✔</div>
+                <div class="leading-loose text-red-300" v-if="tel.status === -1">✔</div>
             </div>
         </div>
         <div class="w-full h-auto p-2 bg-white">
