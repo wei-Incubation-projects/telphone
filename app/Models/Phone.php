@@ -7,7 +7,7 @@ class Phone extends BaseModel
 
     protected $table = 'tel_phone';
 
-    protected $fillable = ['id', 'phone', 'leader_id', 'status', 'batch', '','created_at', 'updated_at'];
+    protected $fillable = ['id', 'phone', 'leader_id', 'status', 'batch', 'user_id','remark','created_at', 'updated_at'];
 //    protected $dateFormat = 'U';
 
     public static array $statusText = [
@@ -20,4 +20,8 @@ class Phone extends BaseModel
         -1 => '关机/停机/空号',
     ];
 
+    public static function statusKey(): array
+    {
+        return array_fill_keys(array_keys(self::$statusText),0);
+    }
 }

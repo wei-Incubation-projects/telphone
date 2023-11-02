@@ -11,7 +11,7 @@ class PhoneIndexRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $uri = explode('/',$this->route()->uri());
+//        $uri = explode('/',$this->route()->uri());
 //        return $this->user('admin')->tokenCan(implode(':', array_slice($uri,-3)));
         return true;
     }
@@ -25,7 +25,7 @@ class PhoneIndexRequest extends FormRequest
     {
         return [
             //
-
+            'leader_id' => 'nullable|integer',
         ];
     }
 }

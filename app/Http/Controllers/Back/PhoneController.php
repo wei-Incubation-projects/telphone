@@ -87,21 +87,6 @@ class PhoneController extends Controller
         return  Phone::where('batch',$request->batch)->delete() ? Response::ok() : Response::fail();
     }
 
-//    /**
-//     * Remove the specified resource from storage.
-//     */
-//    public function upload(Object $request): JsonResponse?|JsonResource
-//    {
-//        //
-//        $request->validate(['file'=>'required|mimes:xls,xlsx,csv']);
-//        if($request->hasFile('file')){
-//            $file = $request->file('file');
-//            \Maatwebsite\Excel\Facades\Excel::import(new PhoneImport(auth('admin')->id()),$file);
-//            return Response::ok() ;
-//        }
-//        return Response::fail('上传失败');
-//    }
-
     /**
      * Batchs a listing of the resource.
      */

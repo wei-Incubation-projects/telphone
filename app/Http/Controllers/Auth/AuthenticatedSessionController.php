@@ -34,6 +34,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $request->user()->fill(['lasted_at'=>now(),'lasted_ip'=>$request->ip()])->save();
+
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 

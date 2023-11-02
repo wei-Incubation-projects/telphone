@@ -29,7 +29,7 @@ class LeaderStoreRequest extends FormRequest
             'email'  => 'nullable|string|min:4,max:64',
             'encry'   => 'nullable|integer',
             'upload'   => 'nullable|integer',
-            'in_leader'   => 'nullable|integer',
+            'is_leader'   => 'nullable|integer',
             'callback'   => 'nullable|integer',
             'status'   => 'nullable|integer',
         ];

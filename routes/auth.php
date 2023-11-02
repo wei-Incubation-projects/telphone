@@ -4,10 +4,11 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Auth\HomePageController;
+use App\Http\Controllers\Auth\MinePageController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\PublicController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
@@ -34,21 +35,17 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [PublicController::class,'index'])
-        ->middleware(['auth'])->name('dashboard');
+    Route::get('/dashboard', [HomePageController::class,'index'])->name('dashboard');
 
-    Route::post('search', [PublicController::class,'search'])
-        ->middleware(['auth'])->name('search');
-    Route::post('telphone', [PublicController::class,'telphone'])
-        ->middleware(['auth'])->name('telphone');
+    Route::post('search', [HomePageController::class,'search'])->name('search');
+    Route::post('telphone', [HomePageController::class,'telphone'])->name('telphone');
 
     Route::get('/recall', function () {
         return Inertia::render('Recall');
-    })->middleware(['auth'])->name('recall');
+    })->name('recall');
 
-    Route::get('/mine', function () {
-        return Inertia::render('Mine');
-    })->middleware(['auth'])->name('mine');
+    Route::get('/mine', [MinePageController::class,'index'])->name('mine');
+    Route::get('/history', [MinePageController::class,'history'])->name('history');
 
 
     Route::get('verify-email', EmailVerificationPromptController::class)

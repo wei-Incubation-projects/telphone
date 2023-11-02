@@ -10,8 +10,10 @@ use App\Http\Requests\Back\Member\MemberShowRequest;
 use App\Http\Requests\Back\Member\UserStoreRequest;
 use App\Http\Requests\Back\Member\UserUpdateRequest;
 use App\Http\Resources\Back\UserResource;
+use App\Models\Phone;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\DB;
 use Jiannei\Response\Laravel\Support\Facades\Response;
@@ -25,7 +27,7 @@ class UserController extends Controller
     public function index(MemberIndexRequest $request, UserFilter $filter): JsonResponse|JsonResource
     {
         //
-        $model = User::filter($filter)->where('is_leader',0)->simplePaginate();
+        $model = User::filter($filter)->where('is_leader', 0)->simplePaginate();
         return Response::success(UserResource::collection($model));
     }
 
@@ -36,9 +38,8 @@ class UserController extends Controller
     {
         //
         $data = $request->validated();
-        if(!empty($data['password'])) $data['password'] = password_hash($data['password'],PASSWORD_DEFAULT);
-        $model = User::create();
-        return $model ? Response::ok('ok') : Response::fail('no');
+        if (!empty($data['password'])) $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+        return User::create($data) ? Response::ok('ok') : Response::fail('no');
     }
 
     /**
@@ -59,8 +60,9 @@ class UserController extends Controller
         //
         $model = User::query()->findOrFail($request->id);
         $data = $request->validated();
-        if(!empty($data['password'])) $data['password'] = password_hash($data['password'],PASSWORD_DEFAULT);
-        return $model->fill($data)->save() ? Response::ok() : Response::fail();
+        if (!empty($data['password'])) $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+        return $model->fill(array_filter($data, fn($v, $k) => is_numeric($v) || !empty($v),ARRAY_FILTER_USE_BOTH))
+            ->save() ? Response::ok() : Response::fail();
     }
 
     /**
@@ -69,17 +71,18 @@ class UserController extends Controller
     public function destroy(MemberDestroyRequest $request): JsonResponse|JsonResource
     {
         //
-        try{
-            DB::transaction(function ()use($request){
-                foreach ($request->ids as $id){
+        try {
+            DB::transaction(function () use ($request) {
+                foreach ($request->ids as $id) {
                     User::query()->findOrFail($id)->delete();
                 }
             });
-            return  Response::ok();
-        }catch (\Throwable $th){
-            return  Response::fail($th->getMessage());
+            return Response::ok();
+        } catch (\Throwable $th) {
+            return Response::fail($th->getMessage());
         }
     }
+
     /**
      * Batch a newly created resource in storage.
      */
@@ -93,10 +96,19 @@ class UserController extends Controller
     /**
      * Stat a listing of the resource.
      */
-    public function stat(): JsonResponse|JsonResource
+    public function stat(Request $request): JsonResponse|JsonResource
     {
         //
-        $model = User::where('is_leader',1)->get();
-        return Response::success(UserResource::collection($model));
+        $model = Phone::query()->where('user_id', $request->id)
+            ->selectRaw('status,count(1) as count')
+            ->groupBy('status')->get()->toArray();
+        $result = Phone::statusKey();
+        foreach ($model as $item) {
+            $result[$item['status']] = $item['count'];
+        }
+        foreach ($result as $key => $value) {
+            $result[$key] = ['label' => Phone::$statusText[$key], 'value' => $value];
+        }
+        return Response::success(array_values($result));
     }
 }

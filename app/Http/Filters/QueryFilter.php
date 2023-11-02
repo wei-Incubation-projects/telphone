@@ -17,11 +17,10 @@ abstract class QueryFilter
     public function apply(Builder $builder): Builder
     {
         $this->builder = $builder;
-
         foreach ($this->filters() as $name => $value) {
-            if(empty($value)) continue;
+            if (!is_numeric($value) && empty($value)) continue;
             if (method_exists($this, $name)) {
-                call_user_func_array([$this, $name], array_filter([$value]));
+                call_user_func_array([$this, $name], array_filter([$value], fn($v) => $v !== null && $v !== ''));
             }
         }
         return $this->builder;
@@ -29,7 +28,7 @@ abstract class QueryFilter
 
     public function filters(): array
     {
-        return $this->request->input('query') ?? [];
+        return $this->request->get('query') ?? [];
     }
 
     public function startTime($time)
