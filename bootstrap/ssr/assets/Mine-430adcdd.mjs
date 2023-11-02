@@ -17,6 +17,8 @@ const _sfc_main = {
     const logout = () => {
       Inertia.post(route("logout"));
     };
+    const onClickLeft = () => {
+    };
     return (_ctx, _push, _parent, _attrs) => {
       const _component_van_nav_bar = NavBar;
       const _component_van_space = Space;
@@ -28,7 +30,7 @@ const _sfc_main = {
       _push(ssrRenderComponent(_component_van_nav_bar, {
         title: "个人中心",
         "left-arrow": "",
-        onClickLeft: _ctx.onClickLeft
+        onClickLeft
       }, null, _parent));
       _push(ssrRenderComponent(_component_van_space, {
         class: "mt-2",
@@ -39,14 +41,16 @@ const _sfc_main = {
           if (_push2) {
             _push2(ssrRenderComponent(_component_van_cell, {
               title: "拨打记录",
-              "is-link": ""
+              "is-link": "",
+              url: _ctx.route("history")
             }, null, _parent2, _scopeId));
           } else {
             return [
               createVNode(_component_van_cell, {
                 title: "拨打记录",
-                "is-link": ""
-              })
+                "is-link": "",
+                url: _ctx.route("history")
+              }, null, 8, ["url"])
             ];
           }
         }),

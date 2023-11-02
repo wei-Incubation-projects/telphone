@@ -17,10 +17,13 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'leader_id' => $this->leader_id,
+            'is_leader' => $this->is_leader,
             'type' => $this->type,
             'username' => $this->username,
             'phone' => $this->phone,
             'email' => $this->email,
+            'encry' => $this->encry,
+            'upload' => $this->upload,
             'status' => $this->status,
             'callback' => $this->callback,
             'created_at' => $this->created_at,

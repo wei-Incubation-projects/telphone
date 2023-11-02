@@ -6,15 +6,15 @@ import { Toast,showDialog } from 'vant';
 import {Inertia} from "@inertiajs/inertia";
 
 const props = defineProps({
-    status: Array|Object,
-    count: Number
+    status: Array|Object, // 统计
+    count: Number, // 总数
+    tel: Object, // 分配号码
 })
 const phone = ref();
 const show = ref(false);
-const tel = reactive({});
-
+const tel = reactive(props.tel || {});
 const display = computed(()=>{
-    return Object.keys(tel).length !== 0;
+    return tel && Object.keys(tel).length !== 0;
 })
 const changeKey = (status)=>{
     show.value = status
@@ -28,11 +28,12 @@ const onClickButton = ()=>{
             if(res.data.code === 200){
                 Object.assign(tel, res.data.data)
             }else{
-                showDialog({
-                    message: '号码不存在或未获得。',
-                }).then(() => {
-                    // on close
-                });
+                console.log(res)
+                // showDialog({
+                //     message: '号码不存在或未获得。',
+                // }).then(() => {
+                //     // on close
+                // });
             }
         }).catch(err=>{
             showDialog({
@@ -45,7 +46,7 @@ const onClickButton = ()=>{
 }
 
 const selectStatus = (val)=>{
-    tel.status = val;
+    props.tel.status = val;
 }
 
 const onClickSubmit = () =>{
@@ -72,13 +73,13 @@ const onClickSubmit = () =>{
     return false;
 }
 const onTelPhone = (phoneNumber)=>{
-    Inertia.visit(`tel:${phoneNumber}`,{method: 'GET', preserveScroll: true})
+    Inertia.visit(`tel://${phoneNumber}`,{method: 'tel', preserveScroll: true})
 }
 </script>
 
 <template>
     <Head title="工作台" />
-    <div class="w-full h-[calc(100vh-50px)] overflow-y-auto pt-4 px-4 pb-6  bg-gray-200 flex-1 flex flex-col ">
+    <div style="overflow:scroll;" class="w-full h-[calc(100vh-50px)] mb-12 overflow-y-auto pt-4 px-4 pb-6  bg-gray-200 flex-1 flex flex-col ">
         <van-number-keyboard
             v-model="phone"
             :maxlength="11"
@@ -109,7 +110,8 @@ const onTelPhone = (phoneNumber)=>{
         <div class="w-full mt-8 bg-white flex flex-col justify-evenly items-center">
             <div class="w-full pl-2 text-sm leading-10 border-b-2 text-base">客户数据</div>
             <div class="w-full h-20 border-b-2 pl-8 text-sm text-gray-400 flex flex-col justify-evenly">
-                <div @click.prevent="onTelPhone(tel.phone)">客户手机号：{{ tel.phone }}</div>
+<!--                <div @click.prevent="onTelPhone(props.tel.phone)">客户手机号：{{ tel.phone }}</div>-->
+                <a :href="'tel:'+ tel.phone">客户手机号：{{ tel.phone }}</a>
                 <div >获取数据时间：{{ tel.created_at }}</div>
             </div>
         </div>

@@ -58,11 +58,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function phones()
-    {
-        return $this->hasMany(UserPhone::class,'user_id');
-    }
-
     public function agent()
     {
         return $this->belongsTo(AdminUser::class,'admin_id');

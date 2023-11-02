@@ -58,7 +58,7 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $e)
     {
-        if($request->acceptsJson()){
+        if($request->acceptsJson() && $request->isMethod('post')){
             $code = $e->getCode() ?: 500;
             switch ($e){
                 case $e instanceof AuthenticationException:
