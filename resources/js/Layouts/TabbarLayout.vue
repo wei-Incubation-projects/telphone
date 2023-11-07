@@ -1,15 +1,29 @@
 <template>
-    <van-tabbar v-model="active">
-        <van-tabbar-item icon="home-o"><Link :href="route('dashboard')">工作台</Link></van-tabbar-item>
-        <van-tabbar-item icon="search"><Link :href="route('recall')">复播</Link></van-tabbar-item>
-        <van-tabbar-item icon="friends-o"><Link :href="route('mine')">我的</Link></van-tabbar-item>
+    <van-tabbar v-model="active" @change="changeTab">
+        <van-tabbar-item icon="home-o">工作台</van-tabbar-item>
+        <van-tabbar-item icon="search">复播</van-tabbar-item>
+        <van-tabbar-item icon="friends-o">我的</van-tabbar-item>
     </van-tabbar>
 </template>
 
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import {Inertia} from "@inertiajs/inertia";
 defineProps({
     active: Number
 })
+const changeTab = (e)=>{
+   console.log(e)
+    switch (e){
+        case 0:
+            Inertia.visit(route('dashboard'));
+            break;
+        case 1:
+            Inertia.visit(route('recall'));
+            break;
+        case 2:
+            Inertia.visit(route('mine'));
+            break;
+    }
+}
 </script>
 

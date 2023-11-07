@@ -5,7 +5,7 @@ import { Head } from '@inertiajs/vue3';
 
 <template>
     <Head title="复播"/>
-    <div class="w-full min-h-screen px-3 bg-gray-200 flex flex-col">
+    <div class="w-full h-[calc(100vh-50px)] overflow-y-auto px-3 bg-gray-200 flex flex-col">
         <div class="mt-4">
             <span class="px-1 bg-blue-400 text-sm rounded-md">可复播总量：0</span>
         </div>

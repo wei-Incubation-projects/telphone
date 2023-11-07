@@ -12,7 +12,7 @@ const onClickLeft = () => {
 </script>
 <template>
     <Head title="我的"></Head>
-    <div class="w-full min-h-screen bg-gray-200 flex flex-col">
+    <div class="w-full h-[calc(100vh-50px)] overflow-y-auto bg-gray-200 flex flex-col">
         <van-nav-bar
             title="个人中心"
             left-arrow
