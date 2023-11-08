@@ -4,18 +4,22 @@ import {Head} from '@inertiajs/vue3';
 import {computed, reactive, ref} from "vue";
 import {showDialog} from 'vant';
 import 'vant/es/dialog/style';
+import {Inertia} from "@inertiajs/inertia";
 
 const props = defineProps({
     status: Array | Object, // 统计
-    count: Number, // 总数
+    count: Number | 0, // 总数
     tel: Object, // 分配号码
 })
-const phone = ref();
-const show = ref(false);
+
 const tel = reactive(props.tel || {});
+const total = reactive({count: props.count || 0});
+const status = reactive(props.status || {});
 const display = computed(() => {
     return tel && Object.keys(tel).length !== 0;
 })
+const phone = ref();
+const show = ref(false);
 const changeKey = (status) => {
     show.value = status
 }
@@ -55,21 +59,22 @@ const onClickSubmit = () => {
                 showDialog({
                     message: '提交成功。',
                 }).then(() => {
-                    // on close
-                    Object.assign(tel, {})
+                    Object.keys(tel).forEach(key => delete tel[key])
+                    console.log(res.data.data)
+                    Object.assign(tel,res.data.data.tel)
+                    total.count = res.data.data.count
+                    Object.assign(status,res.data.data.status)
                 });
             } else {
                 showDialog({
                     message: '提交失败。',
                 })
             }
-            Object.keys(tel).forEach(key => delete tel[key])
         }).catch(err => {
         showDialog({
             message: err,
         })
     });
-    return false;
 }
 </script>
 
@@ -94,7 +99,7 @@ const onClickSubmit = () => {
             </template>
         </van-search>
         <div class="w-full mt-4 text-sm flex flex-wrap">
-            <div class="px-1 mr-2 mb-1 rounded-lg bg-blue-400">当日总量：{{ count }}</div>
+            <div class="px-1 mr-2 mb-1 rounded-lg bg-blue-400">当日总量：{{ total.count }}</div>
             <div class="px-1 mr-2 mb-1 rounded-lg bg-gray-400">已接通：{{ status[1] }}</div>
             <div class="px-1 mr-2 mb-1 rounded-lg bg-green-400">已同意：{{ status[2] }}</div>
             <div class="px-1 mr-2 mb-1 rounded-lg bg-red-400">直接挂断: {{ status[5] }}</div>
@@ -147,7 +152,7 @@ const onClickSubmit = () => {
             </div>
 
             <button class="w-full mt-4 leading-8 text-sm text-gray-100 bg-blue-500 rounded-sm" type="button"
-                    @click.prevent="onClickSubmit">确认提交
+                    @click="onClickSubmit">确认提交
             </button>
         </div>
     </div>
